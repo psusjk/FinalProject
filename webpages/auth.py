@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .table import Customer,Manager
+from .table import Customer, Manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -15,7 +15,8 @@ def login():
         password = request.form.get('password')
 
         customer = Customer.query.filter_by(loginName=loginName).first()
-        manager=Manager.query.filter_by(loginName=loginName).first()
+        manager = Manager.query.filter_by(loginName=loginName).first()
+
         if customer or manager:
             if customer:
                 if check_password_hash(customer.password, password):
@@ -23,12 +24,13 @@ def login():
                     login_user(customer, remember=True)
                     return redirect(url_for('homewindow.home'))
                 else:
-                    flash('Incorrect password, try again.', category='error')    
+                    flash('Incorrect password, try again.', category='error')
             else:
+                # new_password = generate_password_hash(manager.password, method = 'sha256')
                 if check_password_hash(manager.password, password):
                     flash('Logged in successfully!', category='success')
                     login_user(manager, remember=True)
-                    return redirect(url_for('homewindow.home'))
+                    return redirect(url_for('auth.sign_up'))
                 else:
                     flash('Incorrect password, try again.', category='error')
         else:
@@ -37,20 +39,20 @@ def login():
     return render_template("login.html", user=current_user)
 
 
-@auth.route('/logout')
-@login_required
+@ auth.route('/logout')
+@ login_required
 def logout():
     logout_user()
     return redirect(url_for('auth.login'))
 
 
-@auth.route('/sign-up', methods=['GET', 'POST'])
+@ auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'POST':
         loginName = request.form.get('loginName')
         fullName = request.form.get('fullName')
-        phoneNumber=request.form.get('phoneNumber')
-        address=request.form.get('address')
+        phoneNumber = request.form.get('phoneNumber')
+        address = request.form.get('address')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
@@ -58,7 +60,8 @@ def sign_up():
         if customer:
             flash('Login Name already exists.', category='error')
         elif len(loginName) < 4:
-            flash('login Name must be greater than 3 characters.', category='error')
+            flash('login Name must be greater than 3 characters.',
+                  category='error')
         elif len(fullName) < 4:
             flash('Full name must be greater than 4 character.', category='error')
         elif password1 != password2:
@@ -66,8 +69,8 @@ def sign_up():
         elif len(password1) < 6:
             flash('Password must be at least 6 characters.', category='error')
         else:
-            new_user = Customer(loginName=loginName,password=generate_password_hash(password1, method='sha256'),
-                fullName=fullName,phoneNumber=phoneNumber,address=address)
+            new_user = Customer(loginName=loginName, password=generate_password_hash(password1, method='sha256'),
+                                fullName=fullName, phoneNumber=phoneNumber, address=address)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
@@ -75,5 +78,3 @@ def sign_up():
             return redirect(url_for('homewindow.home'))
 
     return render_template("sign_up.html", customer=current_user)
-
-    
