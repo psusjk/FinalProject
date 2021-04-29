@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+from flask.cli import with_appcontext
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -20,9 +21,12 @@ def run_app():
     app.register_blueprint(auth, url_prefix='/')
 
     from .table import Customer,Manager
+    # random=Manager(loginName="sk3452",password="12345678", fullName="Sumit Kumar",phoneNumber=8148269804,address="201 Vairo Blvd")
+    # db.session.add(random)
+    # db.session.commit() 
 
-    create_database(app)   
-
+    create_database(app)
+    
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
@@ -40,3 +44,7 @@ def create_database(app):
     if not path.exists('webpages/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
+
+
+
+

@@ -28,7 +28,7 @@ def login():
                 if check_password_hash(manager.password, password):
                     flash('Logged in successfully!', category='success')
                     login_user(manager, remember=True)
-                    return redirect(url_for('homewindow.home'))
+                    return redirect(url_for('homewindow.mhome'))
                 else:
                     flash('Incorrect password, try again.', category='error')
         else:

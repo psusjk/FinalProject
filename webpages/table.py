@@ -47,6 +47,8 @@ class Books(db.Model):
 	Price=db.Column(db.Float)
 	Keywords=db.Column(db.String(500))
 	SubjectOfBook=db.Column(db.String(150))
+	AverageRating=db.Column(db.Float)
+	RatingCount=db.Column(db.Integer)
 	authors=db.relationship('Author')
 	orderings=db.relationship('Ordering')
 	comment=db.relationship('Comments')
@@ -89,6 +91,9 @@ class Rent(db.Model):
 	BuyDate=db.Column(db.DateTime(timezone=True),default=func.now())
 	EndDate=db.Column(db.DateTime(timezone=True),default=func.now()+1)
 
+# random=Manager(loginName="sk3452",password="12345678", fullName="Sumit Kumar",phoneNumber=8148269804,address="201 Vairo Blvd")
+# db.session.add(random)
+# db.session.commit()
 
 #def init_db():
  #   db.create_all()
