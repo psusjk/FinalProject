@@ -75,3 +75,5 @@ def sign_up():
             return redirect(url_for('homewindow.home'))
 
     return render_template("sign_up.html", customer=current_user)
+
+    

@@ -11,5 +11,18 @@ homewindow = Blueprint('homewindow', __name__)
 def home():
     return render_template("home.html")
 
+@homewindow.route('/buy', methods=['GET', 'POST'])
+def buy():
+	return render_template('buy.html')
 
-    
+@homewindow.route('/rent', methods=['GET', 'POST'])
+def rent():
+	return render_template('rent.html')
+
+@homewindow.route('/reviews', methods=['GET', 'POST'])
+def reviews():
+	return render_template('reviews.html')
+
+@homewindow.route('/rating', methods=['GET', 'POST'])
+def rating():
+	return render_template('rating.html')
