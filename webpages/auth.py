@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .table import Customer, Manager
+from .table import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
@@ -14,29 +14,32 @@ def login():
         loginName = request.form.get('loginName')
         password = request.form.get('password')
 
-        customer = Customer.query.filter_by(loginName=loginName).first()
-        manager = Manager.query.filter_by(loginName=loginName).first()
-
-        if customer or manager:
-            if customer:
-                if check_password_hash(customer.password, password):
-                    flash('Logged in successfully!', category='success')
-                    login_user(customer, remember=True)
-                    return redirect(url_for('homewindow.home'))
-                else:
-                    flash('Incorrect password, try again.', category='error')
+        customer = User.query.filter_by(loginName=loginName).first()
+        if customer:
+            # if customer:
+            if check_password_hash(customer.password, password):
+                flash('Logged in successfully!', category='success')
+                login_user(customer, remember=True)
+                #current_user=customer                    
+                #authenticated_user.set_role("customer")
+                #print(current_user)
+                return redirect(url_for('homewindow.home'))
             else:
-                # new_password = generate_password_hash(manager.password, method = 'sha256')
-                if check_password_hash(manager.password, password):
-                    flash('Logged in successfully!', category='success')
-                    login_user(manager, remember=True)
+                flash('Incorrect password, try again.', category='error')
+            # elif manager:
+            #     # new_password = generate_password_hash(manager.password, method = 'sha256')
+            #     if check_password_hash(manager.password, password):
+            #         flash('Logged in successfully!', category='success')
+            #         login_user(manager, remember=True)
+            #         print(current_user)
+            #         authenticated_user.set_role("manager")                    
+            #         #current_user=manager
+            #         return redirect(url_for('homewindow.home'))
 
-                    return redirect(url_for('homewindow.mhome'))
-
-                    return redirect(url_for('auth.sign_up'))
-
-                else:
-                    flash('Incorrect password, try again.', category='error')
+            #     else:
+            #         flash('Incorrect password, try again.', category='error')
+            # else:
+            #     flash('Login Name does not exist.', category='error')
         else:
             flash('Login Name does not exist.', category='error')
 
@@ -60,7 +63,7 @@ def sign_up():
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
 
-        customer = Customer.query.filter_by(loginName=loginName).first()
+        customer = User.query.filter_by(loginName=loginName).first()
         if customer:
             flash('Login Name already exists.', category='error')
         elif len(loginName) < 4:
@@ -73,8 +76,8 @@ def sign_up():
         elif len(password1) < 6:
             flash('Password must be at least 6 characters.', category='error')
         else:
-            new_user = Customer(loginName=loginName, password=generate_password_hash(password1, method='sha256'),
-                                fullName=fullName, phoneNumber=phoneNumber, address=address)
+            new_user = User(loginName=loginName, password=generate_password_hash(password1, method='sha256'),
+                                fullName=fullName, phoneNumber=phoneNumber, address=address, role="Customer")
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)

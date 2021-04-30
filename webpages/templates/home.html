@@ -5,9 +5,41 @@
     <div class="d-flex justify-content-center">
         <div class="card text-center bg-light mb-3 border-secondary" style="margin-top: 10%; width: 40%;height: 100%; padding: 5%;">
             <div class="card-body flex-column">
-                <h3 class="card-title">Welcome to Bookstore</h3>
+              {% if current_user.role == "Manager" %}
+                <h3 class="card-title">Welcome to Manager portal</h3>
                 <div style="margin: 5px;">
-                    <button type="submit" class="btn btn-primary btn-block">Buy Books</button>        
+                  <form action="/addbooks" method="GET"> 
+                        <input type="submit" value="Add Books" >
+                  </form>        
+                </div>
+
+                <div style="margin: 5px;">
+                  <form action="/update" method="GET"> 
+                        <input type="submit" value="Update Books" >
+                  </form> 
+
+                <div style="margin: 5px;">
+                  <form action="/promote" method="GET"> 
+                        <input type="submit" value="Make Manager" >
+                  </form>        
+                </div>
+                <div style="margin: 5px;">
+                  <form action="/updatestock" method="GET"> 
+                        <input type="submit" value="Update Stock" >
+                  </form>        
+                </div>
+                
+                <div style="margin: 5px;">
+                    <button type="submit" class="btn btn-primary btn-block">Check Stock</button>
+                </div>
+                <div style="margin: 5px;">
+                    <button type="submit" class="btn btn-primary btn-block">Best Buyer</button>
+                </div>
+
+                <div style="margin: 5px;">
+                  <form action="/buy" method="GET"> 
+                        <input type="submit" value="Buy Books" >
+                  </form>        
                 </div>
                 <div style="margin: 5px;">
                     <button type="submit" class="btn btn-primary btn-block">Rent Books</button>        
@@ -18,6 +50,23 @@
                 <div style="margin: 5px;">
                     <button type="submit" class="btn btn-primary btn-block">Give Trust Ratings</button>
                 </div>
+              {% else %}
+                <h3 class="card-title">Welcome to Online Bookstore</h3>
+                <div style="margin: 5px;">
+                  <form action="/buy" method="GET"> 
+                        <input type="submit" value="Buy Books" >
+                  </form>        
+                </div>
+                <div style="margin: 5px;">
+                    <button type="submit" class="btn btn-primary btn-block">Rent Books</button>        
+                </div>
+                <div style="margin: 5px;">
+                    <button type="submit" class="btn btn-primary btn-block">Comments On Books</button>
+                </div>
+                <div style="margin: 5px;">
+                    <button type="submit" class="btn btn-primary btn-block">Give Trust Ratings</button>
+                </div>
+              {% endif %}
             </div>
         </div>
     </div>

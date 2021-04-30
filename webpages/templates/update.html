@@ -1,0 +1,34 @@
+{% extends "index.html" %} {% block title %}Add Books{% endblock %} {% block content
+%}
+<body>
+  <form method="POST">
+    <h3 align="center">Update Book Copies</h3>
+    <div class="form-group">
+      <label for="ISBN">ISBN</label>
+      <input
+        type="number"
+        class="form-control"
+        id="ISBN"
+        name="ISBN"
+        required="required"
+        placeholder="Enter ISBN of the Book"
+      />
+    </div>
+    <div class="form-group">
+      <label for="NumCopies">Number of Copies Received</label>
+      <input
+        type="text"
+        class="form-control"
+        id="NumCopies"
+        name="NumCopies"
+        required="required"
+        placeholder="Enter Number of Copies"
+      />
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-primary">Update Book</button>
+  </form>
+</body>
+
+{% endblock %}

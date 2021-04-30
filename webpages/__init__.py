@@ -24,26 +24,23 @@ def run_app():
     app.register_blueprint(auth, url_prefix='/')
 
 
-    from .table import Customer,Manager
-    # random=Manager(loginName="sk3452",password="12345678", fullName="Sumit Kumar",phoneNumber=8148269804,address="201 Vairo Blvd")
-    # db.session.add(random)
-    # db.session.commit() 
-
+    from .table import User
+    
     create_database(app)
     
-
-    from .table import Customer, Manager
+    from .table import User
 
     create_database(app)
 
     with app.app_context():
-        if len(Manager.query.all()) < 4:
-            manager = Manager(
+        if len(User.query.all()) < 1:
+            manager = User(
                 loginName='sumit1',
                 password=generate_password_hash("password", method='sha256'),
                 fullName="Sumit",
                 phoneNumber=5404495670,
-                address="1900 Lane Foxhunt"
+                address="1900 Lane Foxhunt",
+                role="Manager"
             )
             db.session.add(manager)
             db.session.commit()
@@ -55,7 +52,7 @@ def run_app():
 
     @login_manager.user_loader
     def load_user(loginName):
-        return Customer.query.get(str(loginName))
+        return User.query.get(str(loginName))
 
     return app
 

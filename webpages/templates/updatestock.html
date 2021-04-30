@@ -1,0 +1,22 @@
+{% extends "index.html" %} {% block title %}Add Books{% endblock %} {% block content
+%}
+<body>
+  <form method="POST">
+    <h3 align="center">Update Stock</h3>
+    <div class="form-group">
+      <label for="NoofBooks">Enter the total number of books</label>
+      <input
+        type="number"
+        class="form-control"
+        id="NoofBooks"
+        name="NoofBooks"
+        required="required"
+        placeholder="Enter the total number of books"
+      />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Update Stock</button>
+  </form>
+</body>
+
+{% endblock %}
