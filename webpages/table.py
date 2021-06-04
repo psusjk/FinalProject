@@ -35,6 +35,7 @@ class User(db.Model, UserMixin):
 
 #     def get_id(self):
 #         return (self.loginName)
+#final update
 
 
 class Books(db.Model):

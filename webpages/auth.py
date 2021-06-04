@@ -35,6 +35,7 @@ def login():
             #         authenticated_user.set_role("manager")                    
             #         #current_user=manager
             #         return redirect(url_for('homewindow.home'))
+	#final update
 
             #     else:
             #         flash('Incorrect password, try again.', category='error')

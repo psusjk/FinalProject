@@ -34,6 +34,7 @@ def addbooks():
 
 		if temp:
 			flash('Book already exists.', category='error')
+			return redirect(url_for('homewindow.addbooks'))
 		else:
 			new_book = Books(ISBN=isbn, Title=title, Publisher=publisher,PublicationDate=pdate,
 				NumberOfPages=npages, NumberOfCopies=ncopies, Price=price, Keywords=keys,

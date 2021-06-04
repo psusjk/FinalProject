@@ -9,3 +9,4 @@ from .table import Books, Author, Customer, Comments
 #     )
 # db.session.add(manager)
 # db.session.commit()
+#final commit
